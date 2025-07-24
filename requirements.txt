@@ -1,0 +1,10 @@
+langchain_groq
+faiss-cpu
+langchain
+langgraph
+langchain_community
+langchain_core
+streamlit
+pydantic
+tavily-python
+python-dotenv
