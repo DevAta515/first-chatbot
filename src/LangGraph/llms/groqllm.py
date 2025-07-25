@@ -1,4 +1,3 @@
-from nt import environ
 import os
 import streamlit as st
 from langchain_groq import ChatGroq
