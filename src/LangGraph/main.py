@@ -1,10 +1,12 @@
-from Projects.src.LangGraph.graph.graph_builder import GraphBuilder
+from src.LangGraph.graph.graph_builder import GraphBuilder
 from src.LangGraph.ui.streamlitui.loadui import LoadStreamUi
 
 import streamlit as st
-# from src.langgraphagenticai.LLMS.groqllm import GroqLLM
+from src.LangGraph.llms.groqllm import GroqLLM
 # from src.langgraphagenticai.graph.graph_builder import GraphBuilder
 # from src.langgraphagenticai.ui.streamlitui.display_result import DisplayResultStreamlit
+
+from src.LangGraph.ui.streamlitui.display_result import DisplayResultStreamlit
 
 def load_agentic_app():
     """
@@ -41,6 +43,8 @@ def load_agentic_app():
             graph_builder=GraphBuilder(model)
             try:
                 graph=graph_builder.setup_graph(usecase)
+                print(usecase,graph,user_message)
+                DisplayResultStreamlit(usecase,graph,user_message).display_result_on_ui()
 
             except Exception as e:
                 st.error(f"Error: In setting up the graph {e}")
