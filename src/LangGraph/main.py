@@ -41,7 +41,9 @@ def load_agentic_app():
             graph_builder=GraphBuilder(model)
             try:
                 graph=graph_builder.setup_graph(usecase)
-                print(usecase,graph,user_message)
+                # print(usecase,graph,user_message)
+                print("Hello about to display")
+                print("Usecase",usecase)
                 DisplayResultStreamlit(usecase,graph,user_message).display_result_on_ui()
 
             except Exception as e:

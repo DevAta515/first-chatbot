@@ -8,3 +8,4 @@ streamlit
 pydantic
 tavily-python
 python-dotenv
+langchain-tavily
