@@ -5,6 +5,7 @@ from src.LangGraph.state.state import State
 from langgraph.graph import StateGraph, START, END
 from langgraph.prebuilt import tools_condition
 from src.LangGraph.node.chatbot_web import ChatBotWithWeb
+from src.LangGraph.node.ai_news_node import AINewsNode
 
 
 class GraphBuilder:
@@ -47,7 +48,17 @@ class GraphBuilder:
         self.graph_builder.add_conditional_edges("chatbot", tools_condition)
         self.graph_builder.add_edge("tools", "chatbot")
 
+    def ai_news_graph(self):
+        ai_node=AINewsNode(self.llm)
 
+        self.graph_builder.add_node("fetch_news",ai_node.fetch_news)
+        self.graph_builder.add_node("summarise_news",ai_node.summarize_news)
+        self.graph_builder.add_node("save_result",ai_node.save_result)
+
+        self.graph_builder.set_entry_point("fetch_news")
+        self.graph_builder.add_edge("fetch_news","summarise_news")
+        self.graph_builder.add_edge("summarise_news","save_result")
+        self.graph_builder.add_edge("save_result",END)
 
     def setup_graph(self, usecase:str):
         """
@@ -57,5 +68,7 @@ class GraphBuilder:
             self.basic_chatbot()
         if usecase=="ChatBot with Web":
             self.chatbot_with_web_tool()
+        if usecase=="AI News Summariser":
+            self.ai_news_graph()
 
         return self.graph_builder.compile()
